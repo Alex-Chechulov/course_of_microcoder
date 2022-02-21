@@ -1,0 +1,558 @@
+<main>
+    <header><h3>Преобразования элементов</h3></header>
+
+    <article> <!-- ===================================================================================== -->
+        <h4></h4>
+        <p>
+            На текущий момент нам доступны 4 вида преобразования:
+        </p>
+        <div class="container" style="text-align: center;">
+            <div class="row">
+                <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3 alert-primary p-2 m-2" style="border-radius: 5px;">Перемещение</div>
+                <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3 alert-primary p-2 m-2" style="border-radius: 5px;">Масштабирование</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3 alert-primary p-2 m-2" style="border-radius: 5px;">Вращение</div>
+                <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3 alert-primary p-2 m-2" style="border-radius: 5px;">Наклон</div>
+            </div>
+        </div>
+    </article>
+
+    <article>
+        <h4>Свойство transform</h4>
+        <p>
+            Для того, чтобы использовать перемещение, нужно использовать свойство <em>transform</em> и в качестве значения
+            указываеть тип трансформации:
+        </p>
+        <div class="card bg-light mb-3 p-3">
+            <!-- Количество элементов <code>:
+                * Если один, то отображается исходный код и он же проигрывается на странице.
+                * Если 2 или более, то первый отображается как исходный код, второй проигрывается на странице.
+            -->
+            <code class="css">
+                .box {
+                    transform: тип_трансформации(значение);
+                }
+            </code>
+            <code></code>
+        </div>
+        <p>
+            У трансформации есть одна важная особенность, при применении трансформации происходит изменение объекта, но
+            физически объект находится в этом же месте. Например, у нас есть перемещение объекта, но это никак не влияет
+            на окружающие элементы:
+        </p>
+    </article>
+
+    <article>
+        <h4>Перемещение</h4>
+        <p>
+            Перемещение объекта никак не влияет на окружающие элементы:
+        </p>
+        <div class="card bg-light mb-3 p-3">
+            <code class="html">
+                <style>
+                    .box-container {
+                        position: relative;
+                        padding: 15px;
+                        border: 1px solid lightgrey;
+                        /* overflow: hidden;    Скрыть элементы за пределами контейнера */
+                    }
+                    .base-box {
+                        position: relative;
+                        display: inline-block;
+                        height: 100px; width: 200px;
+                        text-align: center;
+                        line-height: 100px;
+                        color: black;
+                    }
+                    .fake-box-1 {
+                        color: grey;
+                        background-color: lightgray;
+                    }
+                    .fake-box-1::before {
+                        position: absolute;
+                        content: '';
+                        left: -5px; top: -5px;
+                        border: 5px solid red;
+                        border-radius: 5px;
+                    }
+                    .box-1 {
+                        position: absolute;
+                        top: 0px; left: 0px;
+                        background-color: rgba(95, 159, 160, 0.5);
+                        transform: translate(100px, 30px);
+                    }
+                </style>
+                
+                <div class="box-container">
+                    <div class="base-box fake-box-1">transform from
+                        <div class="base-box box-1">box-1</div>
+                    </div>
+                </div>
+            </code>
+            <!-- Реализация анимации примеров -->
+            <style>
+                @keyframes anim-1 {
+                    50%  { transform: translate(0px, 0px); color: transparent; }
+                    100% { transform: translate(100px, 30px); }
+                }
+                .box-1:hover {
+                    animation-name: anim-1;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+            </style>
+        </div>
+
+        <p style="margin-top: 40px;">Еще примеры:</p>
+
+        <div class="card bg-light mb-3 p-3">
+            <code class="html">
+                <style>
+                    .fake-box-2 {
+                        margin: 100px 0px 100px 200px;
+                        color: grey;
+                        background-color: lightgray;
+                    }
+                    .box-2 {
+                        position: absolute;
+                        top: 0px; left: 0px;
+                        background-color: #75bcff;
+                        transform: translate(-200px, -100px);
+                    }
+                    .box-3 {
+                        position: absolute;
+                        top: 0px; left: 0px;
+                        background-color: #da647b;
+                        transform: translate(200px, 0px);
+                    }
+                    .box-4 {
+                        position: absolute;
+                        top: 0px; left: 0px;
+                        background-color: #438d43;
+                        transform: translate(0px, 100px);
+                    }
+                    .box-5 {
+                        position: absolute;
+                        top: 0px; left: 0px;
+                        background-color: #ffcc73;
+                        transform: translate(200px, 100px);
+                    }
+                </style>
+
+                <div class="box-container">
+                    <span style="position: absolute; left: 250px;">Для демонстрации перемещения, нажмите и задержите клик на каждом из блоков</span>
+                    <div class="base-box fake-box-2">transform from
+                        <div class="base-box box-2">translate(-200px, -100px)</div>
+                        <div class="base-box box-3">translate(200px, 0px);</div>
+                        <div class="base-box box-4">translate(0px, 100px);</div>
+                        <div class="base-box box-5">translate(200px, 100px);</div>
+                    </div>
+                </div>
+            </code>
+            <!-- Реализация анимации примеров -->
+            <style>
+                @keyframes anim-2 {
+                    50%  { transform: translate(0px, 0px); }
+                    100% { transform: translate(-200px, -100px); }
+                }
+                .box-2:active {
+                    animation-name: anim-2;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+                @keyframes anim-3 {
+                    50%  { transform: translate(0px, 0px); }
+                    100% { transform: translate(200px, 0px); }
+                }
+                .box-3:active {
+                    animation-name: anim-3;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+                @keyframes anim-4 {
+                    50%  { transform: translate(0px, 0px); }
+                    100% { transform: translate(0px, 100px); }
+                }
+                .box-4:active {
+                    animation-name: anim-4;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+                @keyframes anim-5 {
+                    50%  { transform: translate(0px, 0px); }
+                    100% { transform: translate(200px, 100px); }
+                }
+                .box-5:active {
+                    animation-name: anim-5;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+            </style>
+        </div>
+        <p>
+            Значения также можно задавать в процентах, в этом случае перемещение будет расчитываться относительно
+            размеров блоков, то есть, перемещение по оси <em>x</em> считается относительно ширины, перемещение
+            по оси <em>y</em> в процентах, считается от высоты.
+        </p>
+
+        <div class="card bg-light mb-3 p-3">
+            <code class="html">
+                <style>
+                    .box-6 {
+                        position: absolute;
+                        top: 0px; left: 0px;
+                        background-color: rgba(95, 159, 160, 0.5);
+                        transform: translate(50%, 50%);
+                    }
+                </style>
+                
+                <div class="box-container">
+                    <div class="base-box fake-box-1">transform from
+                        <div class="base-box box-6">translate(50%, 50%)</div>
+                    </div>
+                </div>
+            </code>
+            <!-- Реализация анимации примеров -->
+            <style>
+                @keyframes anim-6 {
+                    50%  { transform: translate(0px, 0px); color: transparent; }
+                    100% { transform: translate(50%, 50%); }
+                }
+                .box-6:hover {
+                    animation-name: anim-6;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+            </style>
+        </div>
+            
+        <p style="margin-top: 30px;">
+            Так же, возможно указать перемещение только по одной из осей указав, например: <em>translate<strong>X</strong>(50%)</em>
+            или <em>translate<strong>Y</strong>(50%)</em> для того, чтобы не писать нулевые значения для второй оси.
+        </p>
+    </article>
+
+    <article>
+        <h4>Масштабирование</h4>
+        <p>
+            Масштабирование элемента указывается без каких-либо единиц измерения. По умолчанию значение равно единице, если указывать
+            значение больше единицы, то элемент увеличивается, если меньше, то элемент уменьшается.
+        </p>
+        <div class="card bg-light mb-3 p-3">
+            <code class="html">
+                <style>
+                    .box-7 {
+                        background-color: #9ACD32;
+                    }
+                    .box-8 {
+                        background-color: rgba(70, 131, 180, 0.5);
+                        transform: scale(1.5);
+                    }
+                    .box-9 {
+                        background-color: rgba(70, 131, 180, 0.5);
+                        transform: scale(0.7);
+                    }
+                </style>
+
+                <div class="box-container">
+                    <div class="base-box box-7">box-7</div>
+                    <div class="base-box box-8">scale(1.5)</div>
+                    <div class="base-box box-9">scale(0.7)</div>
+                </div>
+            </code>
+            <!-- Реализация анимации примеров -->
+            <style>
+                @keyframes anim-8 {
+                    50%  { transform: scale(1); }
+                    100% { transform: scale(1.5); }
+                }
+                .box-8:hover {
+                    animation-name: anim-8;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+                @keyframes anim-9 {
+                    50%  { transform: scale(1); }
+                    100% { transform: scale(0.7); }
+                }
+                .box-9:hover {
+                    animation-name: anim-9;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+            </style>
+        </div>
+
+        <p>
+            У функции scale() можно указать как один аргумент, так и два. Если мы указываем 2 аргумента с разными значениями,
+            то сжатие или наоборот, растяжение происходит по оси <em>x</em> и по оси <em>y</em> по разному:
+        </p>
+        
+        <div class="card bg-light mb-3 p-3">
+            <code class="html">
+                <style>
+                    .box-10 {
+                        background-color: rgba(70, 131, 180, 0.5);
+                        transform: scale(1, 1.5); /* scale(X, Y) */
+                    }
+                    .box-11 {
+                        background-color: rgba(70, 131, 180, 0.5);
+                        transform: scale(1.5, 1); /* scale(X, Y) */
+                    }
+                </style>
+                <div class="box-container">
+                    <div class="base-box box-7">box-7</div>
+                    <div class="base-box box-10">scale(1, 1.5)</div>
+                    <div class="base-box box-11">scale(1.5, 1)</div>
+                </div>
+            </code>
+            <!-- Реализация анимации примеров -->
+            <style>
+                @keyframes anim-10 {
+                    50%  { transform: scale(1); }
+                    100% { transform: scale(1, 1.5); }
+                }
+                .box-10:hover {
+                    animation-name: anim-10;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+                @keyframes anim-11 {
+                    50%  { transform: scale(1); }
+                    100% { transform: scale(1.5, 1); }
+                }
+                .box-11:hover {
+                    animation-name: anim-11;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+            </style>
+        </div>
+        <p>
+            Также, в функции scale() можно указывать отрицательные значения. В этом случае происходит переворот элемента:
+        </p>
+        <div class="card bg-light mb-3 p-3">
+            <code class="html">
+                <style>
+                    .box-12 {
+                        background-color: #9ACD32;
+                        transform: scale(1, -1); /* scale(X, Y) */
+                    }
+                    .box-13 {
+                        background-color: #4684b4;
+                        transform: scale(-1, 1); /* scale(X, Y) */
+                    }
+                    .box-14 {
+                        background-color: rgba(46, 139, 86, 0.5);
+                        transform: scale(-2);
+                    }
+                </style>
+
+                <div class="box-container">
+                    <div class="base-box box-12">scale(1, -1)</div>
+                    <div class="base-box box-13">scale(-1, 1)</div>
+                    <div class="base-box box-14">scale(-2)</div>
+                </div>
+            </code>
+            <!-- Реализация анимации примеров -->
+            <style>
+                @keyframes anim-12 {
+                    50%  { transform: scale(1); }
+                    100% { transform: scale(1, -1); }
+                }
+                .box-12:hover {
+                    animation-name: anim-12;
+                    animation-duration: 3s;
+                    animation-iteration-count: infinite;
+                }
+                @keyframes anim-13 {
+                    50%  { transform: scale(1); }
+                    100% { transform: scale(-1, 1); }
+                }
+                .box-13:hover {
+                    animation-name: anim-13;
+                    animation-duration: 3s;
+                    animation-iteration-count: infinite;
+                }
+                @keyframes anim-14 {
+                    50%  { transform: scale(1); }
+                    100% { transform: scale(-2); }
+                }
+                .box-14:hover {
+                    animation-name: anim-14;
+                    animation-duration: 3s;
+                    animation-iteration-count: infinite;
+                }
+            </style>
+        </div>
+    </article>
+
+    <article>
+        <h4>Вращение</h4>
+        <p>
+            Вращение задается при помощи функции <em>rotate()</em>, в качестве аргумента передается угол на который нужно повернуть
+            элемент. Если указывать положительное значение, то элемент поворачивается по часовой стрелке, и наоборот, если указать
+            отрицательное значение, то вращение элемента будет против часовой стрелки:
+        </p>
+        <div class="card bg-light mb-3 p-3">
+            <code class="html">
+                <style>
+                    .box-15 {
+                        background-color: #9ACD32;
+                        transform: rotate(30deg);
+                    }
+                    .box-16 {
+                        background-color: #4684b4;
+                        transform: rotate(-30deg);
+                    }
+                </style>
+                <div class="box-container">
+                    <div class="base-box box-15">rotate(30deg)</div>
+                    <div class="base-box box-16">rotate(-30deg)</div>
+                </div>
+            </code>
+            <!-- Реализация анимации примеров -->
+            <style>
+                @keyframes anim-15 {
+                    50%  { transform: rotate(0deg); }
+                    100% { transform: rotate(30deg); }
+                }
+                .box-15:hover {
+                    animation-name: anim-15;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+                @keyframes anim-16 {
+                    50%  { transform: rotate(0deg); }
+                    100% { transform: rotate(-30deg); }
+                }
+                .box-16:hover {
+                    animation-name: anim-16;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+            </style>
+        </div>
+
+        <p class="pt-5">
+            Также, значения можно указывать в других единицах измерениях, такие как количество поворотов (turn),
+            градусы (grad) или радианы (rad):
+        </p>
+        
+        <div class="card bg-light mb-3 p-3">
+            <code class="html">
+                <style>
+                    .box-17 {
+                        background-color: #9ACD32;
+                        transform: rotate(1.5turn);
+                    }
+                    .box-18 {
+                        background-color: #4684b4;
+                        transform: rotate(600grad);
+                    }
+                    .box-19 {
+                        background-color: #2E8B57;
+                        transform: rotate(9.42478rad);
+                    }
+                </style>
+                <div class="box-container">
+                    <div class="base-box box-17">rotate(1.5turn)</div>
+                    <div class="base-box box-18">rotate(600grad)</div>
+                    <div class="base-box box-19">rotate(9.42478rad)</div>
+                </div>
+            </code>
+            <!-- Реализация анимации примеров -->
+            <style>
+                @keyframes anim-17 {
+                    40%, 50% { transform: rotate(0turn); }    /* 40%, 50% -  Создается эффект паузы */
+                    90%, 100% { transform: rotate(1.5turn); }
+                }
+                .box-17:hover {
+                    animation-name: anim-17;
+                    animation-duration: 4s;
+                    animation-iteration-count: infinite;
+                }
+                @keyframes anim-18 {
+                    40%, 50% { transform: rotate(0grad); }
+                    90%, 100% { transform: rotate(600grad); }
+                }
+                .box-18:hover {
+                    animation-name: anim-18;
+                    animation-duration: 4s;
+                    animation-iteration-count: infinite;
+                }
+                @keyframes anim-19 {
+                    40%, 50%  { transform: rotate(0rad); }
+                    90%, 100% { transform: rotate(9.42478rad); }
+                }
+                .box-19:hover {
+                    animation-name: anim-19;
+                    animation-duration: 4s;
+                    animation-iteration-count: infinite;
+                }
+            </style>
+        </div>
+    </article>
+
+    <article class="mb-5">
+        <h4>Наклон</h4>
+        <p>
+            Наклон выполняется при помощи функции <em>skew()</em>, в нее передается 2 аргумента, наклон по оси <em>X</em> и
+            наклон по оси <em>Y</em>:
+        </p>
+        <div class="card bg-light mb-3 p-3">
+            <code class="html">
+                <style>
+                    .box-20 {
+                        background-color: #9ACD32;
+                        transform: skew(25deg, 0);
+                    }
+                    .box-21 {
+                        background-color: #4684b4;
+                        transform: skew(0, 25deg);
+                    }
+                    .box-22 {
+                        background-color: #2E8B57;
+                        transform: skew(25deg, 25deg);
+                    }
+                </style>
+                <div class="box-container">
+                    <div class="base-box box-20">skew(25deg, 0)</div>
+                    <div class="base-box box-21">skew(0, 25deg)</div>
+                    <div class="base-box box-22">skew(25deg, 25deg)</div>
+                </div>
+            </code>
+            <!-- Реализация анимации примеров -->
+            <style>
+                @keyframes anim-20 {
+                    50%  { transform: skew(0, 0); }
+                    100% { transform: skew(25deg, 0); }
+                }
+                .box-20:hover {
+                    animation-name: anim-20;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+                @keyframes anim-21 {
+                    50%  { transform: skew(0, 0); }
+                    100% { transform: skew(0, 25deg); }
+                }
+                .box-21:hover {
+                    animation-name: anim-21;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+                @keyframes anim-22 {
+                    50%  { transform: skew(0, 0); }
+                    100% { transform: skew(25deg, 25deg); }
+                }
+                .box-22:hover {
+                    animation-name: anim-22;
+                    animation-duration: 2s;
+                    animation-iteration-count: infinite;
+                }
+            </style>
+        </div>
+    </article>
+</main>
